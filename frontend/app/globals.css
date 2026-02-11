@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 33 100% 97%;
+    /* Orange-50 */
+    --foreground: 20 14.3% 4.1%;
+    /* Very dark brown */
+
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+
+    --primary: 24.6 95% 53.1%;
+    /* Orange-500 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 38 92% 50%;
+    /* Amber-500 */
+    --secondary-foreground: 0 0% 100%;
+
+    --accent: 45 93.4% 47.5%;
+    /* Yellow-500 */
+    --accent-foreground: 26 83.3% 14.1%;
+
+    --muted: 33 100% 96.5%;
+    /* Orange-100 */
+    --muted-foreground: 25 5.3% 44.7%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 24 5.7% 82.9%;
+    /* Orange-200 */
+    --input: 24 5.7% 82.9%;
+    --ring: 24.6 95% 53.1%;
+    /* Orange-500 */
+
+    --radius: 1rem;
+    /* rounded-2xl */
+  }
+
+  .dark {
+    --background: 20 14.3% 4.1%;
+    /* Very dark brown/black */
+    --foreground: 33 100% 96.5%;
+    /* Orange-100 */
+
+    --card: 24 9.8% 10%;
+    /* Orange-950 */
+    --card-foreground: 33 100% 96.5%;
+
+    --popover: 24 9.8% 10%;
+    --popover-foreground: 33 100% 96.5%;
+
+    --primary: 24.6 95% 53.1%;
+    /* Orange-500 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 38 92% 50%;
+    /* Amber-500 */
+    --secondary-foreground: 0 0% 100%;
+
+    --accent: 45 93.4% 47.5%;
+    /* Yellow-500 */
+    --accent-foreground: 0 0% 100%;
+
+    --muted: 33 5.5% 32.4%;
+    /* Orange-800 */
+    --muted-foreground: 33 5% 64.9%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 24 5.4% 33.9%;
+    /* Orange-800 */
+    --input: 24 5.4% 33.9%;
+    --ring: 24.6 95% 53.1%;
+    /* Orange-500 */
+  }
+}
+
+@layer utilities {
+  .bg-grid-white {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(0 0 0 / 0.04)'%3E%3Cpath d='M0 .5H31.5V32'/%3E%3C/svg%3E");
+  }
+
+  .dark .bg-grid-white {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(255 255 255 / 0.04)'%3E%3Cpath d='M0 .5H31.5V32'/%3E%3C/svg%3E");
+  }
+
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+
+  @keyframes blob {
+    0% {
+      transform: translate(0px, 0px) scale(1);
+    }
+
+    33% {
+      transform: translate(30px, -50px) scale(1.1);
+    }
+
+    66% {
+      transform: translate(-20px, 20px) scale(0.9);
+    }
+
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased transition-colors duration-500;
+  }
+
+  /* Hero Animations */
+  @keyframes fade-in-down {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-down {
+    animation: fade-in-down 0.8s ease-out forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out forwards;
+    opacity: 0;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+
+  .animation-delay-600 {
+    animation-delay: 0.6s;
+  }
+
+  .animation-delay-800 {
+    animation-delay: 0.8s;
+  }
+
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
+  }
+}
