@@ -113,9 +113,9 @@ const useShaderBackground = () => {
         private buffer: WebGLBuffer | null = null;
         private scale: number;
         private shaderSource: string;
-        private mouseMove = [0, 0];
-        private mouseCoords = [0, 0];
-        private pointerCoords = [0, 0];
+        private mouseMove: [number, number] = [0, 0];
+        private mouseCoords: [number, number] = [0, 0];
+        private pointerCoords: number[] = [0, 0];
         private nbrOfPointers = 0;
 
         private vertexSrc = `#version 300 es
@@ -142,11 +142,11 @@ void main(){gl_Position=position;}`;
             this.init();
         }
 
-        updateMove(deltas: number[]) {
+        updateMove(deltas: [number, number]) {
             this.mouseMove = deltas;
         }
 
-        updateMouse(coords: number[]) {
+        updateMouse(coords: [number, number]) {
             this.mouseCoords = coords;
         }
 
@@ -260,8 +260,8 @@ void main(){gl_Position=position;}`;
 
             gl.uniform2f((program as any).resolution, this.canvas.width, this.canvas.height);
             gl.uniform1f((program as any).time, now * 1e-3);
-            gl.uniform2f((program as any).move, ...this.mouseMove);
-            gl.uniform2f((program as any).touch, ...this.mouseCoords);
+            gl.uniform2f((program as any).move, this.mouseMove[0], this.mouseMove[1]);
+            gl.uniform2f((program as any).touch, this.mouseCoords[0], this.mouseCoords[1]);
             gl.uniform1i((program as any).pointerCount, this.nbrOfPointers);
             gl.uniform2fv((program as any).pointers, this.pointerCoords);
             gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
@@ -272,14 +272,14 @@ void main(){gl_Position=position;}`;
     class PointerHandler {
         private scale: number;
         private active = false;
-        private pointers = new Map<number, number[]>();
-        private lastCoords = [0, 0];
-        private moves = [0, 0];
+        private pointers = new Map<number, [number, number]>();
+        private lastCoords: [number, number] = [0, 0];
+        private moves: [number, number] = [0, 0];
 
         constructor(element: HTMLCanvasElement, scale: number) {
             this.scale = scale;
 
-            const map = (element: HTMLCanvasElement, scale: number, x: number, y: number) =>
+            const map = (element: HTMLCanvasElement, scale: number, x: number, y: number): [number, number] =>
                 [x * scale, element.height - y * scale];
 
             element.addEventListener('pointerdown', (e) => {
@@ -323,7 +323,7 @@ void main(){gl_Position=position;}`;
             return this.pointers.size;
         }
 
-        get move() {
+        get move(): [number, number] {
             return this.moves;
         }
 
@@ -333,8 +333,8 @@ void main(){gl_Position=position;}`;
                 : [0, 0];
         }
 
-        get first() {
-            return this.pointers.values().next().value || this.lastCoords;
+        get first(): [number, number] {
+            return (this.pointers.values().next().value as [number, number]) || this.lastCoords;
         }
     }
 
